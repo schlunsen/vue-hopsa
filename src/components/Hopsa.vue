@@ -8,36 +8,59 @@
 </template>
 <script>
 import SVG from "svg.js";
-
+let t;
 export default {
-  props: ["lineWidth"],
+  props: ["lineWidth", "delay"],
   data: () => ({}),
+
+  mounted() {
+    let t = this;
+    let delay = this.delay ? this.delay : 1000;
+    this.init();
+    setTimeout(() => {
+      this.doAnimation();
+    }, delay);
+  },
   computed: {
     svgID() {
       return "svgtransition-" + this._uid;
     }
   },
-  mounted() {
-    let contentWidth = this.$refs.slotContent.offsetWidth;
-    let contentHeight = this.$refs.slotContent.offsetHeight;
+  methods: {
+    init() {
+      this.contentWidth = this.$refs.slotContent.offsetWidth;
+      this.contentHeight = this.$refs.slotContent.offsetHeight;
 
-    var draw = SVG(this.svgID).size(contentWidth, contentHeight);
+      this.draw = SVG(this.svgID).size(this.contentWidth, this.contentHeight);
 
-    let numberOfLines = parseInt(contentHeight / parseInt(this.lineWidth), 10);
+      let numberOfLines = parseInt(
+        this.contentHeight / parseInt(this.lineWidth),
+        10
+      );
+      if (!numberOfLines) {
+        setTimeout(() => {
+          this.doAnimation();
+        }, 100);
+        return;
+      }
+      numberOfLines += 1;
 
-    let lines = [];
-    for (let index = 0; index < numberOfLines; index++) {
-      let rect = draw
-        .rect(contentWidth, this.lineWidth)
-        .attr({ fill: "white" });
-      rect.move(0, index * this.lineWidth);
-      lines.push(rect);
+      this.lines = [];
+      for (let index = 0; index < numberOfLines; index++) {
+        let rect = this.draw
+          .rect(this.contentWidth, this.lineWidth)
+          .attr({ fill: "white" });
+        rect.move(0, index * this.lineWidth);
+        this.lines.push(rect);
+      }
+    },
+    doAnimation() {
+      this.lines.forEach((line, idx) => {
+        line
+          .animate(370, "<", idx * 10)
+          .move(-1 * (this.contentWidth * 1.1), idx * this.lineWidth);
+      });
     }
-    lines.forEach((line, idx) => {
-      line
-        .animate(670, "<", idx * 10)
-        .move(-1 * (contentWidth * 1.1), idx * this.lineWidth);
-    });
   }
 };
 </script>
