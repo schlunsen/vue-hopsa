@@ -1,40 +1,40 @@
 <template>
   <div id="app">
-    <Hopsa :lineWidth="20">
+    <Hopsa :lineWidth="20" :delay="4000">
       <template v-slot:content>
-        
-        <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt="">
+        <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>
       </template>
     </Hopsa>
   </div>
 </template>
 
 <script>
-import Hopsa from './components/Hopsa.vue'
+import Hopsa from "./components/Hopsa.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Hopsa
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  
-  padding:0;
+
+  padding: 0;
 }
 img {
   width: 100%;
   margin: 0;
 }
-body,html {
+body,
+html {
   padding: 0;
   margin: 0;
 }

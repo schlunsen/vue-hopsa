@@ -39,7 +39,7 @@ export default {
       );
       if (!numberOfLines) {
         setTimeout(() => {
-          this.doAnimation();
+          this.init();
         }, 100);
         return;
       }
