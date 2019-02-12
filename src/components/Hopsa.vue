@@ -40,7 +40,7 @@ export default {
       if (!numberOfLines) {
         setTimeout(() => {
           this.init();
-        }, 100);
+        }, 10);
         return;
       }
       numberOfLines += 1;
