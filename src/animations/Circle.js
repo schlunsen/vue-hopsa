@@ -1,22 +1,18 @@
-class CircleAnimation {
+import BaseAnimation from './BaseAnimation.js'
 
-    constructor(hopsaInstance) {
-        this.hopsaInstance = hopsaInstance;
-        this.init();
-    }
-
+class CircleAnimation extends BaseAnimation {
+    
     init() {
+        
         this.circle = this.hopsaInstance.draw.circle(0).move(this.hopsaInstance.contentWidth / 2.5, this.hopsaInstance.contentHeight / 2).fill("#fff");
         this.hopsaInstance.clip.add(this.circle);
 
     }
     doEnterAnimation(done) {
-        this.circle.animate(920).radius(this.hopsaInstance.contentWidth);
+        this.circle.animate(920).radius(2000);
 
     }
-    doExitAnimation(done) {
-
-    }
+    
 }
 
 export default CircleAnimation

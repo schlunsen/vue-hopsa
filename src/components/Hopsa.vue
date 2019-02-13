@@ -10,16 +10,23 @@
 import SVG from "svg.js";
 
 export default {
-  name: 'hopsa',
+  name: "hopsa",
   props: ["delay", "animation"],
   mounted() {
     let delay = this.delay ? this.delay : 1000;
     this.init();
-    this.initAnimation();
+  },
+  watch: {
+    animation() {
+      if (!this.animation) return
+      console.log(this.animation)
 
-    setTimeout(() => {
-      this.doAnimation();
-    }, delay);
+      this.initAnimation();
+
+      setTimeout(() => {
+        this.doAnimation();
+      }, this.delay);
+    }
   },
   computed: {
     svgID() {
@@ -31,6 +38,7 @@ export default {
   },
   methods: {
     init() {
+      
       this.contentWidth = this.$refs.slotContent.offsetWidth;
       this.contentHeight = this.$refs.slotContent.offsetHeight;
       this.draw = SVG(this.svgID).size(this.contentWidth, this.contentHeight);
@@ -42,7 +50,13 @@ export default {
       }, 1);
     },
     initAnimation() {
-      this.animationInstance = new this.animation(this);
+      
+      if (typeof this.animation === 'function') {
+        
+        this.animationInstance = new this.animation(this);
+      } else {
+        this.animationInstance = this.animation;
+      }
     },
     doAnimation() {
       this.animationInstance.doEnterAnimation();
