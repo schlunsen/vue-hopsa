@@ -10,6 +10,7 @@
 import SVG from "svg.js";
 
 export default {
+  name: 'hopsa',
   props: ["delay", "animation"],
   mounted() {
     let delay = this.delay ? this.delay : 1000;
