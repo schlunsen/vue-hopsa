@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Hopsa :lineWidth="20" :delay="4000">
+    <Hopsa :animation="animation" :delay="400">
       <template v-slot:content>
         <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>
       </template>
@@ -10,9 +10,14 @@
 
 <script>
 import Hopsa from "./components/Hopsa.vue";
+import CircleAnimation from "./animations/Circle.js";
+import BoxAnimation from "./animations/Box.js";
 
 export default {
   name: "app",
+  data: () => ({
+    animation: BoxAnimation
+  }),
   components: {
     Hopsa
   }

@@ -1,22 +1,21 @@
 <template>
   <div class="mainwrap">
-    <div class="content" ref="slotContent">
-      <slot name="content"/>
+    <div :id="contentID" class="content" ref="slotContent">
+      <slot name="content" id="hopsaContent"/>
     </div>
     <div :id="svgID" class="svgoverlay"></div>
   </div>
 </template>
 <script>
 import SVG from "svg.js";
-let t;
-export default {
-  props: ["lineWidth", "delay"],
-  data: () => ({}),
 
+export default {
+  props: ["delay", "animation"],
   mounted() {
-    let t = this;
     let delay = this.delay ? this.delay : 1000;
     this.init();
+    this.initAnimation();
+
     setTimeout(() => {
       this.doAnimation();
     }, delay);
@@ -24,42 +23,28 @@ export default {
   computed: {
     svgID() {
       return "svgtransition-" + this._uid;
+    },
+    contentID() {
+      return "hopsa-" + this._uid;
     }
   },
   methods: {
     init() {
       this.contentWidth = this.$refs.slotContent.offsetWidth;
       this.contentHeight = this.$refs.slotContent.offsetHeight;
-
       this.draw = SVG(this.svgID).size(this.contentWidth, this.contentHeight);
+      this.clip = this.draw.clip();
 
-      let numberOfLines = parseInt(
-        this.contentHeight / parseInt(this.lineWidth),
-        10
-      );
-      if (!numberOfLines) {
-        setTimeout(() => {
-          this.init();
-        }, 10);
-        return;
-      }
-      numberOfLines += 1;
-
-      this.lines = [];
-      for (let index = 0; index < numberOfLines; index++) {
-        let rect = this.draw
-          .rect(this.contentWidth, this.lineWidth)
-          .attr({ fill: "white" });
-        rect.move(0, index * this.lineWidth);
-        this.lines.push(rect);
-      }
+      setTimeout(() => {
+        document.getElementById(this.contentID).style.clipPath =
+          "url('#" + this.clip.id() + "')";
+      }, 1);
+    },
+    initAnimation() {
+      this.animationInstance = new this.animation(this);
     },
     doAnimation() {
-      this.lines.forEach((line, idx) => {
-        line
-          .animate(370, "<", idx * 10)
-          .move(-1 * (this.contentWidth * 1.1), idx * this.lineWidth);
-      });
+      this.animationInstance.doEnterAnimation();
     }
   }
 };
@@ -80,7 +65,7 @@ export default {
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 22;
+  z-index: 2;
 }
 </style>
 
