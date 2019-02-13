@@ -1,6 +1,6 @@
-import Hopsa from './components/Hopsa.vue'
-import CircleAnimation from './animations/Circle.js'
-import BoxAnimation from './animations/Box.js'
+import Hopsa from './Hopsa.vue'
+import CircleAnimation from '../animations/Circle.js'
+import BoxAnimation from '../animations/Box.js'
 
 export {
     Hopsa,
