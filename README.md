@@ -22,7 +22,7 @@ SVG Clipping transitions for vue components
 
 import { Hopsa, CircleAnimation } from "vue-hopsa";
 
-// or 
+// or via plugin install
 Vue.use(Hopsa)
 
 export default {
