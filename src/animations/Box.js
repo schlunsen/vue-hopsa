@@ -1,16 +1,18 @@
 import BaseAnimation from "./BaseAnimation";
 
 class BoxAnimation extends BaseAnimation {
-    
+    constructor(hopsa, options) {
+        super(hopsa, options)
+    }
     init() {
-        this.box = this.hopsaInstance.draw.rect(0,0).move(0,0).fill("#fff");
-        this.hopsaInstance.clip.add(this.box);
+        this.box = this.hopsa.draw.rect(0,0).move(0,0).fill("#fff");
+        this.hopsa.clip.add(this.box);
     }
-    doEnterAnimation(done) {
-        this.box.animate(920).size(this.hopsaInstance.contentWidth,this.hopsaInstance.contentHeight);
+    enterAnimation(done) {
+        this.box.animate(this.options.duration).size(this.hopsa.contentWidth,this.hopsa.contentHeight);
+    }
 
-    }
-    doExitAnimation(done) {
+    exitAnimation(done) {
 
     }
 }

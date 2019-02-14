@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Hopsa :animation="animation" :delay="400" ref="hopsa">
+    <Hopsa :animation="animation" :options="hopsaOptions" ref="hopsa">
       <template v-slot:content>
         <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>
       </template>
@@ -16,13 +16,13 @@ import BoxAnimation from "./animations/Box.js";
 export default {
   name: "app",
   data: () => ({
-    animation: null
+    animation: 'circle',
+    hopsaOptions: {
+      delay: 400,
+      duration: 1100,
+      radius: 2000
+    }
   }),
-  mounted() {
-    setTimeout(() => {
-      this.animation = new CircleAnimation(this.$refs.hopsa);
-    }, 1000);
-  },
   components: {
     Hopsa
   }

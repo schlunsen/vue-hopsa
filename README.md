@@ -12,28 +12,63 @@ SVG Clipping transitions for vue components
 ```
 <template>
     <div>
-        <hopsa :delay="1000" :animation="animation">
+        <!-- Wrap your component with Hopsa -->
+        <hopsa :animation="'circle'" :options="options">
             <template v-slot:content>
+            
             <!-- CONTENT HERE -->
+            <my-awesome-component></my-awesome-component>
+
             </template>
         </hopsa>
     </div>
 </template>
+import Hopsa from 'vue-hopsa' 
+import MyAwesomeComponent from 'my/aweseome/path'
 
-import { Hopsa, CircleAnimation } from "vue-hopsa";
-
-// or via plugin install
+// Install plugin 
 Vue.use(Hopsa)
 
 export default {
-  components: {
-    Hopsa
-  },
   data: () => ({
-      animation: CircleAnimation
-  })
+      options: {
+        duration: 1000,
+        radius: 2000,
+        delay: 1000
+      }
+  }),
+  components: {
+    MyAwesomeComponent
+  }
   ...
 }
 
 ```
 
+## Animations
+
+* Circle
+* Box
+
+## Custom animations
+
+Animation can easily be created by extending BaseAnimation class for use with hopsa component.
+
+Hopsa uses svg.js 
+
+You can add svg elements to this.hopsa.clip
+
+```
+class MyAwesomeAnimation extends BaseAnimation {
+  init() {
+    
+    this.circle = this.hopsaInstance.draw.circle(0).move(this.hopsaInstance.contentWidth / 2.5, this.hopsaInstance.contentHeight / 2).fill("#fff");
+    this.hopsa.clip.add(this.circle);
+
+  }
+  
+}
+
+
+
+}

@@ -8,24 +8,27 @@
 </template>
 <script>
 import SVG from "svg.js";
+import { ANIMATIONS, getAnimation } from "../animations/index.js";
 
 export default {
   name: "hopsa",
-  props: ["delay", "animation"],
+  props: ["animation", "options"],
   mounted() {
     let delay = this.delay ? this.delay : 1000;
-    this.init();
+    
+      this.$nextTick(() => {
+      this.init();
+      if (this.animation) {
+        this.initAnimation();
+        this.doAnimation();
+      }
+    });
   },
   watch: {
     animation() {
-      if (!this.animation) return
-      console.log(this.animation)
-
+      if (!this.animation) return;
       this.initAnimation();
-
-      setTimeout(() => {
-        this.doAnimation();
-      }, this.delay);
+      this.doAnimation();
     }
   },
   computed: {
@@ -38,22 +41,22 @@ export default {
   },
   methods: {
     init() {
-      
       this.contentWidth = this.$refs.slotContent.offsetWidth;
       this.contentHeight = this.$refs.slotContent.offsetHeight;
       this.draw = SVG(this.svgID).size(this.contentWidth, this.contentHeight);
       this.clip = this.draw.clip();
-
-      setTimeout(() => {
-        document.getElementById(this.contentID).style.clipPath =
-          "url('#" + this.clip.id() + "')";
-      }, 1);
+      document.getElementById(this.contentID).style.clipPath =
+        "url('#" + this.clip.id() + "')";
     },
     initAnimation() {
-      
-      if (typeof this.animation === 'function') {
-        
-        this.animationInstance = new this.animation(this);
+      if (typeof this.animation === "function") {
+        this.animationInstance = new this.animation(this, this.options);
+      } else if (typeof this.animation === "string") {
+        this.animationInstance = getAnimation(
+          this,
+          this.animation,
+          this.options
+        );
       } else {
         this.animationInstance = this.animation;
       }
