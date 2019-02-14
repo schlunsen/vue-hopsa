@@ -1,4 +1,4 @@
-# vue-hopsa
+# Hopsa
 
 ** UNDER CONSTRUCTION **
 
