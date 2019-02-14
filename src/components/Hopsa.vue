@@ -8,14 +8,12 @@
 </template>
 <script>
 import SVG from "svg.js";
-import { ANIMATIONS, getAnimation } from "../animations/index.js";
+import { getAnimation } from "../animations/index.js";
 
 export default {
   name: "hopsa",
   props: ["animation", "options"],
-  mounted() {
-    let delay = this.delay ? this.delay : 1000;
-    
+  mounted() {    
       this.$nextTick(() => {
       this.init();
       if (this.animation) {
