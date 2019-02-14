@@ -1,5 +1,7 @@
 # vue-hopsa
 
+** UNDER CONSTRUCTION **
+
 SVG Clipping transitions for vue components
 
 [![npm (scoped with tag)](https://img.shields.io/npm/v/vue-hopsa/latest.svg?style=flat-square)](https://npmjs.com/package/vue-hopsa)
@@ -66,7 +68,7 @@ class MyAwesomeAnimation extends BaseAnimation {
     this.hopsa.clip.add(this.circle);
 
   }
-  
+
 }
 
 
