@@ -1,19 +1,16 @@
 class BaseAnimation {
     constructor(hopsaInstance, options) {
-        let defaultOptions = {
-            radius: 2000,
-            duration: 1000,
-            delay: 100
-        }
-
         this.hopsa = hopsaInstance;
-        this.options = Object.assign(defaultOptions, options);
+        this.options = options
+
+        this.width = hopsaInstance.contentWidth;
+        this.height = hopsaInstance.contentHeight;
         this.init();
     }
 
-    doEnterAnimation() {
+    doEnterAnimation(done) {
         setTimeout(() => {
-            this.enterAnimation()
+            this.enterAnimation(done)
         }, this.options.delay);
     }
 

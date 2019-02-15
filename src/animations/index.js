@@ -1,5 +1,6 @@
 import CircleAnimation from "../animations/Circle";
 import BoxAnimation from "../animations/Box";
+import BatmanAnimation from "../animations/Batman";
 
 const getAnimation = (hopsa, animation, options) => {
     let animationClass = ANIMATIONS[animation];
@@ -8,8 +9,10 @@ const getAnimation = (hopsa, animation, options) => {
 
 const ANIMATIONS = {
     circle: CircleAnimation,
-    box: BoxAnimation
+    box: BoxAnimation,
+    batman: BatmanAnimation
 };
+
 export {
     ANIMATIONS,
     getAnimation

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Hopsa :animation="animation" :options="hopsaOptions" ref="hopsa">
+    <Hopsa :animation="animation" :options="hopsaOptions" ref="hopsa" id="hopsa">
       <template v-slot:content>
-        <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>
+        <img src="https://airc.ie/wp-content/uploads/horse-web.jpg"  alt>
       </template>
     </Hopsa>
   </div>
@@ -10,19 +10,18 @@
 
 <script>
 import Hopsa from "./components/Hopsa.vue";
-import CircleAnimation from "./animations/Circle.js";
-import BoxAnimation from "./animations/Box.js";
 
 export default {
   name: "app",
   data: () => ({
-    animation: 'circle',
+    animation: 'batman',
     hopsaOptions: {
       delay: 400,
       duration: 1100,
-      radius: 2000
     }
   }),
+  mounted() {
+  },
   components: {
     Hopsa
   }
@@ -36,8 +35,12 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  max-width: 800px;
 
   padding: 0;
+}
+#hopsa {
+  
 }
 img {
   width: 100%;

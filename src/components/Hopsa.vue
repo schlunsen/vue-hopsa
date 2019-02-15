@@ -13,12 +13,15 @@ import { getAnimation } from "../animations/index.js";
 export default {
   name: "hopsa",
   props: ["animation", "options"],
-  mounted() {    
-      this.$nextTick(() => {
+  mounted() {
+    
+    this.$nextTick(() => {
       this.init();
       if (this.animation) {
         this.initAnimation();
-        this.doAnimation();
+        if (this.mergedOptions.autostart) {
+          this.doEnterAnimation();
+        }
       }
     });
   },
@@ -26,7 +29,7 @@ export default {
     animation() {
       if (!this.animation) return;
       this.initAnimation();
-      this.doAnimation();
+      this.doEnterAnimation();
     }
   },
   computed: {
@@ -35,14 +38,28 @@ export default {
     },
     contentID() {
       return "hopsa-" + this._uid;
+    },
+    mergedOptions() {
+      let defaultOptions = {
+            radius: 2000,
+            duration: 1000,
+            delay: 100,
+            autostart: true
+        }
+      return Object.assign(defaultOptions, this.options)
     }
+
+
+
   },
   methods: {
     init() {
+      
       this.contentWidth = this.$refs.slotContent.offsetWidth;
       this.contentHeight = this.$refs.slotContent.offsetHeight;
       this.draw = SVG(this.svgID).size(this.contentWidth, this.contentHeight);
       this.clip = this.draw.clip();
+      this.mask = this.draw.mask();
       document.getElementById(this.contentID).style.clipPath =
         "url('#" + this.clip.id() + "')";
     },
@@ -59,8 +76,16 @@ export default {
         this.animationInstance = this.animation;
       }
     },
-    doAnimation() {
-      this.animationInstance.doEnterAnimation();
+    doEnterAnimation() {
+      this.animationInstance.doEnterAnimation(() => {
+        
+        let svgElement = document.getElementById(this.svgID);
+        svgElement.remove();
+
+        if (this.options.onComplete) {
+          this.options.onComplete();
+        }
+      });
     }
   }
 };

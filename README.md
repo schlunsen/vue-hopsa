@@ -36,7 +36,9 @@ export default {
       options: {
         duration: 1000,
         radius: 2000,
-        delay: 1000
+        delay: 1000,
+        onComplete: () => {},
+        
       }
   }),
   components: {
