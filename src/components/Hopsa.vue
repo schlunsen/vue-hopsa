@@ -8,6 +8,7 @@
 </template>
 <script>
 import SVG from "svg.js";
+import easing from "svg.easing.js"
 import { getAnimation } from "../animations/index.js";
 
 export default {
@@ -44,7 +45,8 @@ export default {
             radius: 2000,
             duration: 1000,
             delay: 100,
-            autostart: true
+            autostart: true,
+            easing: 'backOut'
         }
       return Object.assign(defaultOptions, this.options)
     }

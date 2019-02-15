@@ -17,7 +17,8 @@ export default {
     animation: 'batman',
     hopsaOptions: {
       delay: 400,
-      duration: 1100,
+      duration: 1800,
+      easing: 'sineOut'
     }
   }),
   mounted() {

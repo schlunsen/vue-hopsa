@@ -9,9 +9,9 @@ class BaseAnimation {
     }
 
     doEnterAnimation(done) {
-        setTimeout(() => {
-            this.enterAnimation(done)
-        }, this.options.delay);
+
+        this.enterAnimation(done)
+
     }
 
     enterAnimation(done) {
