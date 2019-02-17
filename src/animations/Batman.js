@@ -1,5 +1,6 @@
 import BaseAnimation from "./BaseAnimation";
 
+
 // Batman shapes
 const paths = [
     'M213,222C219,150,165,139,130,183C125,123,171,73.8,247,51.6C205,78,236,108,280,102C281,90.3,282,79,286,68.2C287,72,288,75.8,289,79.7C293,79.7,296,79.7,300,79.7C304,79.7,307,79.7,311,79.7C312,75.8,313,72,314,68.2C318,79,319,90.3,320,102C364,108,395,78,353,51.6C429,73.8,475,123,470,183C435,139,381,150,387,222C364,176,315,172,300,248C285,172,236,176,213,222Z',
@@ -10,24 +11,31 @@ const paths = [
 ]
 
 class BatmanAnimation extends BaseAnimation {
-    init() {
-        // Add batman
-        this.batman = this.hopsa.draw.path(paths[0]).size(this.width /2, this.height/ 2).move(this.hopsa.contentWidth / 4, this.hopsa.contentHeight / 4).fill("#fff");
-        this.batman.scale(0.0001)
-        
-        //this.hopsa.clip.add(this.box);
-        this.hopsa.clip.add(this.batman);
-        
-    }
+
     enterAnimation(done) {
-        
-        //this.batman.animate(this.options.duration).size(this.hopsa.contentWidth*2,this.hopsa.contentHeight*2).move(this.width * -2,this.height * -2);
-        this.batman.animate(this.options.duration).scale(6).afterAll(done)
-        
-    }   
+        // Add batman
+        this.batman = this.draw.path(paths[0]).size(this.width / 2, this.height / 2).move(this.hopsa.contentWidth / 4, this.hopsa.contentHeight / 4).fill("#fff");
+        this.batman.scale(0.01)
+        this.clip.add(this.batman);
+
+        this.batman.animate(this.options.duration).scale(this.options.scale).afterAll(done)
+        this.animating = true;
+
+    }
 
     exitAnimation(done) {
 
+        if (!this.batman || this.exitCompleted) {
+            this.batman = this.draw.path(paths[0]).size(this.width / 2, this.height / 2).move(this.hopsa.contentWidth / 4, this.hopsa.contentHeight / 4).fill("#fff");
+            this.batman.scale(this.options.scale)
+            this.clip.add(this.batman);
+        }
+        this.batman.animate(this.options.duration).scale(0.0001).afterAll(done)
+
+    }
+    stopAnimation() {
+        this.started = false;
+        this.batman.stop()
     }
 }
 

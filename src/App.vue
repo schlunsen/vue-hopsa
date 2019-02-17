@@ -1,27 +1,96 @@
 <template>
-  <div id="app">
-    <Hopsa :animation="animation" :options="hopsaOptions" ref="hopsa" id="hopsa">
-      <template v-slot:content>
-        <img src="https://airc.ie/wp-content/uploads/horse-web.jpg"  alt>
-      </template>
-    </Hopsa>
-  </div>
+  <v-app>
+    
+    <header>
+      
+      <h1 class="logo">Hopsa</h1>  
+      
+      
+      <!-- Place this tag where you want the button to render. -->
+    </header>
+    <v-container>
+      <v-layout row wrap justify-center></v-layout>
+      <v-layout row wrap justify-center align-center>
+        <v-card xs4>
+          <Hopsa :animation="selectedAnimation" :options="hopsaOptions" ref="hopsa" id="hopsa">
+            <template v-slot:content>
+              <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>
+            </template>
+          </Hopsa>
+        </v-card>
+      </v-layout>
+      <br>
+      <v-layout row wrap justify-center>
+        <v-flex xs3 md2>
+          <v-select :items="animations" v-model="selectedAnimation" label="Animations"></v-select>
+        </v-flex>
+        <v-flex xs3 md2>
+          <v-select :items="easings" v-model="hopsaOptions.easing" label="Easings"></v-select>
+        </v-flex>
+        <v-flex xs3 md2>
+          <v-text-field
+            v-model="hopsaOptions.duration"
+            name="duration"
+            label="Duration"
+            solo
+            clearable
+          ></v-text-field>
+        </v-flex>
+      </v-layout>
+      <v-layout row wrap justify-center>
+        <v-btn @click="doEnterAnimation()">Do enter animation</v-btn>
+        <v-btn @click="doExitAnimation()">Do exit animation</v-btn>
+      </v-layout>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
+import SVG from 'svg.js'
 import Hopsa from "./components/Hopsa.vue";
+import Background from "./components/Background.vue";
+import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
 
 export default {
-  name: "app",
+  name: "appmain",
   data: () => ({
-    animation: 'batman',
+    animation: "batman",
+    selectedAnimation: "batman",
+    animations: [
+      {
+        text: "Batman",
+        value: "batman"
+      },
+      {
+        text: "Circle",
+        value: "circle"
+      },
+      {
+        text: "Box",
+        value: "box"
+      }
+    ],
+    easings: (() => {
+      return Object.keys(SVG.easing);
+    })(),
     hopsaOptions: {
-      delay: 400,
-      duration: 1800,
-      easing: 'sineOut'
+      delay: 0,
+      duration: 800,
+      easing: "sineOut",
+      minHeight: 200,
+      minWidth: 200,
+      autostart: true,
+      scale: 7,
+      removeSVGOnComplete: false
     }
   }),
-  mounted() {
+  methods: {
+    doEnterAnimation() {
+      this.$refs.hopsa.doEnterAnimation();
+    },
+    doExitAnimation() {
+      this.$refs.hopsa.doExitAnimation();
+    }
   },
   components: {
     Hopsa
@@ -30,26 +99,37 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+header {
   text-align: center;
-  color: #2c3e50;
-  max-width: 800px;
-
-  padding: 0;
+  min-height: 35vh;
+  background: #ff530d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
+.logo {
+  font-family: "Sacramento";
+  font-size: 20vh;
+  color: white;
+  width: 100%;
+}
+
+
+
 #hopsa {
-  
+  transform: translateZ(0);
 }
 img {
   width: 100%;
   margin: 0;
+  max-width: 600px;
 }
 body,
 html {
   padding: 0;
   margin: 0;
+  font-family: "Roboto";
 }
 </style>

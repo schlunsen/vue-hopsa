@@ -1,34 +1,34 @@
 <template>
-  <div class="mainwrap">
-    <div :id="contentID" class="content" ref="slotContent">
-      <slot name="content" id="hopsaContent"/>
+  <div>
+    <div class="mainwrap">
+      <div :id="contentID" class="hopsaContent" ref="slotContent">
+        <slot name="content" class/>
+      </div>
     </div>
     <div :id="svgID" class="svgoverlay"></div>
   </div>
 </template>
 <script>
-import SVG from "svg.js";
-import easing from "svg.easing.js"
 import { getAnimation } from "../animations/index.js";
 
 export default {
   name: "hopsa",
   props: ["animation", "options"],
   mounted() {
-    
-    this.$nextTick(() => {
-      this.init();
+    this.loadListener = window.addEventListener("load", () => {
       if (this.animation) {
-        this.initAnimation();
         if (this.mergedOptions.autostart) {
+          this.initAnimation();
           this.doEnterAnimation();
         }
       }
     });
   },
+  destroyed() {
+    document.removeEventListener("load", this.loadListener);
+  },
   watch: {
     animation() {
-      if (!this.animation) return;
       this.initAnimation();
       this.doEnterAnimation();
     }
@@ -42,48 +42,53 @@ export default {
     },
     mergedOptions() {
       let defaultOptions = {
-            radius: 2000,
-            duration: 1000,
-            delay: 100,
-            autostart: true,
-            easing: 'backOut'
-        }
-      return Object.assign(defaultOptions, this.options)
+        radius: 2000,
+        duration: 1000,
+        delay: 100,
+        minWidth: 200,
+        minHeight: 200,
+        autostart: true,
+        easing: "backOut"
+      };
+      return Object.assign(defaultOptions, this.options);
     }
-
-
-
   },
   methods: {
-    init() {
-      
-      this.contentWidth = this.$refs.slotContent.offsetWidth;
-      this.contentHeight = this.$refs.slotContent.offsetHeight;
-      this.draw = SVG(this.svgID).size(this.contentWidth, this.contentHeight);
-      this.clip = this.draw.clip();
-      this.mask = this.draw.mask();
-      document.getElementById(this.contentID).style.clipPath =
-        "url('#" + this.clip.id() + "')";
-    },
     initAnimation() {
       if (typeof this.animation === "function") {
-        this.animationInstance = new this.animation(this, this.options);
+        this.animationInstance = new this.animation(
+          this,
+          this.options,
+          this.svgID,
+          this.contentID
+        );
       } else if (typeof this.animation === "string") {
         this.animationInstance = getAnimation(
           this,
           this.animation,
-          this.options
+          this.options,
+          this.svgID,
+          this.contentID
         );
       } else {
         this.animationInstance = this.animation;
       }
+      this.animationInstance.init();
+      this.initialized = true;
     },
     doEnterAnimation() {
+      if (!this.initialized) this.initAnimation();
       this.animationInstance.doEnterAnimation(() => {
-        
-        let svgElement = document.getElementById(this.svgID);
-        svgElement.remove();
-
+        if (this.options.onComplete) {
+          this.options.onComplete();
+        }
+      });
+    },
+    doExitAnimation() {
+      if (!this.initialized) this.initAnimation();
+      let svgElement = document.getElementById(this.svgID);
+      svgElement.style.display = "block";
+      this.animationInstance.doExitAnimation(() => {
         if (this.options.onComplete) {
           this.options.onComplete();
         }
@@ -97,18 +102,21 @@ export default {
   position: relative;
 }
 
-.content {
+.hopsaContent {
   position: relative;
   overflow: hidden;
+  opacity: 0;
 }
 
 .svgoverlay {
+  transform: translateZ(0);
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  z-index: 2;
+  z-index: 3;
+  overflow: hidden;
 }
 </style>
 
