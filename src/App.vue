@@ -1,18 +1,23 @@
 <template>
   <v-app>
-    
     <header>
-      
-      <h1 class="logo">Hopsa</h1>  
-      
-      
+      <h1 class="logo">Hopsa</h1>
+      <p>SVG Clipping transitions for Vue</p>
+      <br>
+
       <!-- Place this tag where you want the button to render. -->
+      <a
+        class="github-button"
+        href="https://github.com/schlunsen/vue-hopsa"
+        data-icon="octicon-star"
+        aria-label="Star vue-hopsa on GitHub"
+      >Star</a>
     </header>
     <v-container>
       <v-layout row wrap justify-center></v-layout>
       <v-layout row wrap justify-center align-center>
-        <v-card xs4>
-          <Hopsa :animation="selectedAnimation" :options="hopsaOptions" ref="hopsa" id="hopsa">
+        <v-card xs4 @mouseenter="doEnterAnimation()" @mouseleave="doExitAnimation({}, 1)">
+          <Hopsa  :animation="selectedAnimation" :options="hopsaOptions" ref="hopsa" id="hopsa">
             <template v-slot:content>
               <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>
             </template>
@@ -21,20 +26,22 @@
       </v-layout>
       <br>
       <v-layout row wrap justify-center>
-        <v-flex xs3 md2>
+        <v-flex xs12 md2>
           <v-select :items="animations" v-model="selectedAnimation" label="Animations"></v-select>
         </v-flex>
-        <v-flex xs3 md2>
+        <v-flex xs12 md2>
           <v-select :items="easings" v-model="hopsaOptions.easing" label="Easings"></v-select>
         </v-flex>
-        <v-flex xs3 md2>
-          <v-text-field
-            v-model="hopsaOptions.duration"
-            name="duration"
+      </v-layout>
+      <v-layout row wrap justify-center>
+        <v-flex xs12 md6>
+          <v-slider
             label="Duration"
-            solo
-            clearable
-          ></v-text-field>
+            v-model="hopsaOptions.duration"
+            step="1"
+            thumb-label="always"
+            max="5000"
+          ></v-slider>
         </v-flex>
       </v-layout>
       <v-layout row wrap justify-center>
@@ -46,7 +53,7 @@
 </template>
 
 <script>
-import SVG from 'svg.js'
+import SVG from "svg.js";
 import Hopsa from "./components/Hopsa.vue";
 import Background from "./components/Background.vue";
 import "vuetify/dist/vuetify.min.css"; // Ensure you are using css-loader
@@ -101,22 +108,22 @@ export default {
 <style>
 header {
   text-align: center;
-  min-height: 35vh;
+  min-height: 15vh;
   background: #ff530d;
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
   flex-wrap: wrap;
+  flex-direction: column;
+  padding-bottom: 20px;
 }
 .logo {
   font-family: "Sacramento";
-  font-size: 20vh;
+  font-size: 10vh;
   color: white;
   width: 100%;
 }
-
-
 
 #hopsa {
   transform: translateZ(0);

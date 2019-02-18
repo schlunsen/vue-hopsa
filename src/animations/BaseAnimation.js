@@ -11,7 +11,7 @@ class BaseAnimation {
         this.enterCompleted = false
 
         this.exitStarted = false
-        this.exitComplted = false
+        this.exitCompleted = true
     }
 
     getDefaultOptions() {
@@ -29,6 +29,7 @@ class BaseAnimation {
 
 
     init() {
+
         this.width = this.hopsa.$refs.slotContent.offsetWidth;
         this.height = this.hopsa.$refs.slotContent.offsetHeight;
 
@@ -60,19 +61,22 @@ class BaseAnimation {
     }
 
     doEnterAnimation(done) {
+        console.log(this.clip)
         if (this.enterStarted) return;
-        if (this.enterCompleted) {
-            this.init()
-            this.enterCompleted = false;
-        }
-        this.enterStarted = true;
-
         if (this.exitStarted) {
             this.stopAnimation()
             this.exitStarted = false;
         }
+        if (this.enterCompleted) {
+            this.init()
 
-        
+//            this.enterCompleted = false;
+        }
+        this.enterStarted = true;
+
+
+
+
         setTimeout(() => {
             this.enterAnimation(() => {
                 this.enterStarted = false;
@@ -91,6 +95,10 @@ class BaseAnimation {
     }
     doExitAnimation(done) {
         if (this.exitStarted) return;
+        if (this.exitCompleted) {
+
+            //this.exitCompleted = false;
+        }
 
         this.exitStarted = true;
         if (this.enterStarted) {
@@ -98,7 +106,7 @@ class BaseAnimation {
             this.enterStarted = false;
         }
 
-        
+
 
 
         setTimeout(() => {
@@ -107,6 +115,8 @@ class BaseAnimation {
                 this.enterStarted = false;
                 this.enterCompleted = false
                 this.exitCompleted = true;
+                
+
 
                 if (this.options.removeSVGOnComplete) {
                     let svgElement = document.getElementById(this.svgID);

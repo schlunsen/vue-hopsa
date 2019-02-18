@@ -14,27 +14,39 @@ class BatmanAnimation extends BaseAnimation {
 
     enterAnimation(done) {
         // Add batman
-        this.batman = this.draw.path(paths[0]).size(this.width / 2, this.height / 2).move(this.hopsa.contentWidth / 4, this.hopsa.contentHeight / 4).fill("#fff");
-        this.batman.scale(0.01)
+        if (!this.batman) {
+            this.batman = this.draw.path(paths[0]).size(this.width / 2, this.height / 2).move(this.hopsa.contentWidth / 4, this.hopsa.contentHeight / 4).fill("#fff");
+        }
+        
+        
+            this.batman.scale(0.01)
+        
+        
         this.clip.add(this.batman);
 
         this.batman.animate(this.options.duration).scale(this.options.scale).afterAll(done)
         this.animating = true;
+
 
     }
 
     exitAnimation(done) {
 
         if (!this.batman || this.exitCompleted) {
-            this.batman = this.draw.path(paths[0]).size(this.width / 2, this.height / 2).move(this.hopsa.contentWidth / 4, this.hopsa.contentHeight / 4).fill("#fff");
-            this.batman.scale(this.options.scale)
+            
+            if (!this.batman) {
+                this.batman = this.draw.path(paths[0]);
+            }
+
+            this.batman.size(this.width / 2, this.height / 2).move(this.hopsa.contentWidth / 4, this.hopsa.contentHeight / 4).fill("#fff").scale(this.options.scale)
+            
+            
             this.clip.add(this.batman);
         }
         this.batman.animate(this.options.duration).scale(0.0001).afterAll(done)
 
     }
     stopAnimation() {
-        this.started = false;
         this.batman.stop()
     }
 }
