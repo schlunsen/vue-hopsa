@@ -10,19 +10,34 @@ import BaseAnimation from './BaseAnimation.js'
 class CircleAnimation extends BaseAnimation {
     
     enterAnimation(done) {
-        this.circle = this.draw.circle(this.width /2).move(this.width / 4, this.height / 4).fill("#fff");
-        this.circle.scale(0.0001)
+        if(!this.circle) {
+            this.circle = this.draw.circle(this.width /2).move(this.width / 4, this.height / 4).fill("#fff");
+        }
+        if (!this.animating) {
+            this.circle.scale(0.0001)
+            
+        }
+        
         this.clip.add(this.circle);
         this.circle.animate(this.options.duration, this.options.easing, this.options.delay).scale(3).afterAll(done);
     }
 
     exitAnimation(done) {
-        this.circle.animate(this.options.duration, this.options.easing, this.options.delay).radius(0).scale(0).afterAll(done);
+        if (!this.circle) {
+            this.circle = this.draw.circle(this.width /2).move(this.width / 4, this.height / 4).fill("#fff");
+        }
+        if (!this.animating) {
+            
+            this.circle.scale(3)
+        }
+        this.circle.animate(this.options.duration, this.options.easing).scale(0.000001).afterAll(done);
     }
 
     stopAnimation() {
-        this.started = false
-        this.circle.stop()
+        if (this.circle) {
+            this.circle.stop()
+        }
+        
     }
 
 }

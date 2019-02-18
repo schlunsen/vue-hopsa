@@ -16,7 +16,7 @@
     <v-container>
       <v-layout row wrap justify-center></v-layout>
       <v-layout row wrap justify-center align-center>
-        <v-card xs4 @mouseenter="doEnterAnimation()" @mouseleave="doExitAnimation({}, 1)">
+        <v-card xs4 @mouseenter="doEnterAnimation()" @mouseleave="doExitAnimation()">
           <Hopsa  :animation="selectedAnimation" :options="hopsaOptions" ref="hopsa" id="hopsa">
             <template v-slot:content>
               <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>

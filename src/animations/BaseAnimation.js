@@ -61,20 +61,12 @@ class BaseAnimation {
     }
 
     doEnterAnimation(done) {
-        console.log(this.clip)
         if (this.enterStarted) return;
-        if (this.exitStarted) {
-            this.stopAnimation()
-            this.exitStarted = false;
-        }
-        if (this.enterCompleted) {
-            this.init()
 
-//            this.enterCompleted = false;
-        }
+        this.stopAnimation()
+        this.exitStarted = false;
         this.enterStarted = true;
-
-
+        this.enterCompleted = false;
 
 
         setTimeout(() => {
@@ -83,6 +75,7 @@ class BaseAnimation {
                 this.exitCompleted = false
                 this.exitStarted = false
                 this.enterCompleted = true;
+                this.animating = false;
 
                 if (this.options.removeSVGOnComplete) {
                     let svgElement = document.getElementById(this.svgID);
@@ -91,22 +84,19 @@ class BaseAnimation {
 
                 done()
             })
+            this.animating = true;
         }, this.options.delay);
+
     }
     doExitAnimation(done) {
+
         if (this.exitStarted) return;
-        if (this.exitCompleted) {
-
-            //this.exitCompleted = false;
-        }
-
+        this.exitCompleted = false;
         this.exitStarted = true;
         if (this.enterStarted) {
             this.stopAnimation()
             this.enterStarted = false;
         }
-
-
 
 
         setTimeout(() => {
@@ -115,7 +105,7 @@ class BaseAnimation {
                 this.enterStarted = false;
                 this.enterCompleted = false
                 this.exitCompleted = true;
-                
+                this.animating = false;
 
 
                 if (this.options.removeSVGOnComplete) {
@@ -124,6 +114,7 @@ class BaseAnimation {
                 }
                 done()
             })
+            this.animating = true;
         }, this.options.delay);
 
     }
