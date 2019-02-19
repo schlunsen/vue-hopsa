@@ -1,23 +1,28 @@
 <template>
   <v-app>
-    <header>
-      <h1 class="logo">Hopsa</h1>
-      <p>SVG Clipping transitions for Vue</p>
-      <br>
+    <Hopsa :animation="'bars'" :options="{duration: 800, barsDelay: 10}" ref="hopsa" id="hopsa">
+      <template v-slot:content>
+        <header class>
+          <h1 class="logo stroked">Hopsa</h1>
+          <p class>SVG Clipping transitions for Vue</p>
+          <br>
 
-      <!-- Place this tag where you want the button to render. -->
-      <a
-        class="github-button"
-        href="https://github.com/schlunsen/vue-hopsa"
-        data-icon="octicon-star"
-        aria-label="Star vue-hopsa on GitHub"
-      >Star</a>
-    </header>
+          <!-- Place this tag where you want the button to render. -->
+          <a
+            class="github-button"
+            href="https://github.com/schlunsen/vue-hopsa"
+            data-icon="octicon-star"
+            aria-label="Star vue-hopsa on GitHub"
+          >Star</a>
+        </header>
+      </template>
+    </Hopsa>
+
     <v-container>
       <v-layout row wrap justify-center></v-layout>
       <v-layout row wrap justify-center align-center>
         <v-card xs4 @mouseenter="doEnterAnimation()" @mouseleave="doExitAnimation()">
-          <Hopsa  :animation="selectedAnimation" :options="hopsaOptions" ref="hopsa" id="hopsa">
+          <Hopsa :animation="selectedAnimation" :options="hopsaOptions" ref="hopsa" id="hopsa">
             <template v-slot:content>
               <img src="https://airc.ie/wp-content/uploads/horse-web.jpg" alt>
             </template>
@@ -117,14 +122,30 @@ header {
   flex-wrap: wrap;
   flex-direction: column;
   padding-bottom: 20px;
+  color: white;
+  box-shadow: inset 0px -8px 82px -20px rgba(0, 0, 0, 0.75);
+  font-family: "Lilita One" !important;
+  font-size: 18px;
 }
+header p {
+  margin-bottom: 0px;
+}
+
 .logo {
-  font-family: "Sacramento";
-  font-size: 10vh;
+  //font-family: "Lilita One" !important;
+  font-size: 9vh;
   color: white;
   width: 100%;
 }
+.stroked {
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #3f3f3f;
+}
 
+.application {
+  font-family: "Lilita One";
+  font-family: "Architects Daughter";
+}
 #hopsa {
   transform: translateZ(0);
 }
@@ -137,6 +158,5 @@ body,
 html {
   padding: 0;
   margin: 0;
-  font-family: "Roboto";
 }
 </style>

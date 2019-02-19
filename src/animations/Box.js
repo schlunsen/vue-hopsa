@@ -14,7 +14,7 @@ class BoxAnimation extends BaseAnimation {
 
 
         this.clip.add(this.box);
-        this.box.animate(this.options.duration, this.options.easing, this.options.delay).scale(2).afterAll(done);
+        this.box.animate(this.options.duration, this.options.easing).scale(2).afterAll(done);
     }
 
     exitAnimation(done) {
@@ -26,7 +26,7 @@ class BoxAnimation extends BaseAnimation {
             this.box.scale(this.options.scale)
         }
 
-        this.box.animate(this.options.duration, this.options.easing, this.options.delay).scale(0.00001).afterAll(done);
+        this.box.animate(this.options.duration, this.options.easing).scale(0.00001).afterAll(done);
     }
     stopAnimation() {
         if (this.box) {

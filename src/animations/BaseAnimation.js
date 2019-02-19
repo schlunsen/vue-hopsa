@@ -4,7 +4,7 @@ import easing from "svg.easing.js";
 class BaseAnimation {
     constructor(hopsaInstance, options, svgID, contentID) {
         this.hopsa = hopsaInstance;
-        this.options = options;
+        this.options = Object.assign(this.getDefaultOptions(), options);
         this.svgID = svgID;
         this.contentID = contentID;
         this.enterStarted = false
