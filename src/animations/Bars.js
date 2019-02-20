@@ -37,7 +37,7 @@ class BarsAnimation extends BaseAnimation {
             minHeight: 200,
             autostart: true,
             easing: "expoOut",
-            removeSVGOnComplete: false,
+            removeSVGOnComplete: true,
             barsDelay: 30
         }
     }
