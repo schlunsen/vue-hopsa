@@ -4,6 +4,9 @@
 
 SVG Clipping transitions for vue components
 
+![](public/hopsa.gif)
+
+
 [![npm (scoped with tag)](https://img.shields.io/npm/v/vue-hopsa/latest.svg?style=flat-square)](https://npmjs.com/package/vue-hopsa)
 [![npm](https://img.shields.io/npm/dt/vue-hopsa.svg?style=flat-square)](https://npmjs.com/package/vue-hopsa)
 [![Dependencies](https://david-dm.org/schlunsen/vue-hopsa/status.svg?style=flat-square)](https://david-dm.org/schlunsen/vue-hopsa)
