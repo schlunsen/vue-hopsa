@@ -55,6 +55,20 @@ export default {
 * Batman
 * Bars
 
+## Options
+
+| Name  |Default   | Text|
+|---|---|---|
+| duration   | 1000   | Time of animation in ms|
+| delay   | 0   | Delay of animation in ms|
+| easing   | backOut   | Easing function for animation |
+| autostart   | true   | Start enter transition on mount|
+| removeSVGOnComplete   | false   | Remove svg overlay, for making content active|
+| minWidth   | 200   | Min width for overlay|
+| minHeight   | 200   | Min height for overlay|
+
+
+
 ## Custom animations
 
 Animation can easily be created by extending BaseAnimation class for use with hopsa component.
