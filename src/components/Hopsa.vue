@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <div class="mainwrap">
-      <div :id="contentID" class="hopsaContent" ref="slotContent">
-        <slot name="content" class/>
-      </div>
+  <div class="mainwrap">
+    <div :id="contentID" class="hopsaContent" ref="slotContent">
+      <slot name="content" class />
     </div>
-    <div :id="svgID" class="svgoverlay"></div>
   </div>
+  <div :id="svgID" class="svgoverlay"></div>
 </template>
 <script>
 import { getAnimation } from "../animations/index.js";
@@ -100,6 +98,8 @@ export default {
 <style scoped>
 .mainwrap {
   position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .hopsaContent {
